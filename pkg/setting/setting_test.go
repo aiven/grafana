@@ -299,6 +299,19 @@ func TestLoadingSettings(t *testing.T) {
 			require.Equal(t, "default_url_val", value)
 		})
 	})
+
+	t.Run("Test disabling variable expansion from env and file", func(t *testing.T) {
+		cfg := NewCfg()
+		os.Setenv("APP_MODE", "production")
+		err := cfg.Load(CommandLineArgs{
+			HomePath: "../../",
+			Config:   filepath.Join(HomePath, "pkg/setting/testdata/expansion.ini"),
+		})
+
+		require.Nil(t, err)
+		require.Equal(t, Env, "$__env{APP_MODE}")
+		require.Equal(t, cfg.MetricsEndpointBasicAuthPassword, "$__file{/etc/secrets/metrics_password}")
+	})
 }
 
 func TestParseAppURLAndSubURL(t *testing.T) {

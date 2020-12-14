@@ -255,6 +255,8 @@ type Cfg struct {
 	CSPEnabled bool
 	// CSPTemplate contains the Content Security Policy template.
 	CSPTemplate string
+	DisableEnvVariableExpansion      bool
+	DisableFileVariableExpansion     bool
 
 	TempDataLifetime                 time.Duration
 	PluginsEnableAlpha               bool
@@ -759,6 +761,18 @@ func (cfg *Cfg) loadConfiguration(args CommandLineArgs) (*ini.File, error) {
 
 	// apply command line overrides
 	applyCommandLineProperties(commandLineProps, parsedFile)
+
+	// enable or disable env and file variable expansion
+	if security := parsedFile.Section("security"); security != nil {
+		cfg.DisableEnvVariableExpansion = security.Key("disable_env_variable_expansion").MustBool(false)
+		cfg.DisableFileVariableExpansion = security.Key("disable_file_variable_expansion").MustBool(false)
+	}
+	if cfg.DisableEnvVariableExpansion {
+		removeExpander("env")
+	}
+	if cfg.DisableFileVariableExpansion {
+		removeExpander("file")
+	}
 
 	// evaluate config values containing environment variables
 	err = expandConfig(parsedFile)
