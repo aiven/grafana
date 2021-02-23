@@ -23,6 +23,7 @@ export interface PromOptions extends DataSourceJsonData {
   directUrl: string;
   customQueryParameters?: string;
   disableMetricsLookup?: boolean;
+  disableLabelValuesLookup?: boolean;
 }
 
 export interface PromQueryRequest extends PromQuery {

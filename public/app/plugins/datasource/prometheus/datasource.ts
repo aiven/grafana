@@ -56,6 +56,7 @@ export class PrometheusDatasource extends DataSourceApi<PromQuery, PromOptions> 
   httpMethod: string;
   languageProvider: PrometheusLanguageProvider;
   lookupsDisabled: boolean;
+  labelValuesDisabled: boolean;
   customQueryParameters: any;
 
   constructor(
@@ -77,7 +78,9 @@ export class PrometheusDatasource extends DataSourceApi<PromQuery, PromOptions> 
     this.ruleMappings = {};
     this.languageProvider = new PrometheusLanguageProvider(this);
     this.lookupsDisabled = instanceSettings.jsonData.disableMetricsLookup ?? false;
+    this.labelValuesDisabled = instanceSettings.jsonData.disableLabelValuesLookup;
     this.customQueryParameters = new URLSearchParams(instanceSettings.jsonData.customQueryParameters);
+    console.log('ALEX DEBUG DATASOURCE', this.labelValuesDisabled);
   }
 
   init = () => {

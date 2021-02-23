@@ -85,6 +85,15 @@ export const PromSettings = (props: Props) => {
             tooltip="Checking this option will disable the metrics chooser and metric/label support in the query field's autocomplete. This helps if you have performance issues with bigger Prometheus instances."
           />
         </div>
+        <div className="gf-form">
+          <Switch
+            checked={options.jsonData.disableLabelValuesLookup ?? false}
+            label="Disable tag/value lookup"
+            labelClass="width-14"
+            onChange={onUpdateDatasourceJsonDataOptionChecked(props, 'disableLabelValuesLookup')}
+            tooltip="Checking this option will disable the autocompletion for metric label/value pairs. This helps if you have performance issues with bigger Prometheus instances."
+          />
+        </div>
         <div className="gf-form-inline">
           <div className="gf-form max-width-30">
             <FormField

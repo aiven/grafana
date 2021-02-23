@@ -62,6 +62,7 @@ export default class PromQlLanguageProvider extends LanguageProvider {
   datasource: PrometheusDatasource;
   lookupMetricsThreshold: number;
   lookupsDisabled: boolean; // Dynamically set to true for big/slow instances
+  labelValuesDisabled: boolean;
 
   /**
    *  Cache for labels of series. This is bit simplistic in the sense that it just counts responses each as a 1 and does
@@ -80,6 +81,11 @@ export default class PromQlLanguageProvider extends LanguageProvider {
     // Disable lookups until we know the instance is small enough
     this.lookupMetricsThreshold = DEFAULT_LOOKUP_METRICS_THRESHOLD;
     this.lookupsDisabled = true;
+    this.labelValuesDisabled = this.datasource['labelValuesDisabled'];
+    console.log('ALEX DEBUG LABELBVALUES', this.labelValuesDisabled);
+    console.log('ALEX DEBUG lookups', this.datasource.t.lookupsDisabled);
+    console.log('ALEX DEBUG DATASURCEVALE', this.datasource);
+    console.log('ALEX DEBUG keys', Object.keys(this.datasource));
 
     Object.assign(this, initialValues);
   }
@@ -394,7 +400,8 @@ export default class PromQlLanguageProvider extends LanguageProvider {
   };
 
   async getLabelValues(selector: string, withName?: boolean) {
-    if (this.lookupsDisabled) {
+    console.log('GET LABEL VALUES DISABLED', this.labelValuesDisabled);
+    if (this.labelValuesDisabled) {
       return undefined;
     }
     try {

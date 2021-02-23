@@ -227,6 +227,7 @@ describe('Language completion provider', () => {
     it('returns default label suggestions on label context and no metric', async () => {
       const instance = new LanguageProvider(datasource);
       instance.lookupsDisabled = false;
+      instance.labelValuesDisabled = false;
       const value = Plain.deserialize('{}');
       const ed = new SlateEditor({ value });
       const valueWithSelection = ed.moveForward(1).value;
@@ -247,6 +248,7 @@ describe('Language completion provider', () => {
       } as any) as PrometheusDatasource;
       const instance = new LanguageProvider(datasources);
       instance.lookupsDisabled = false;
+      instance.labelValuesDisabled = false;
       const value = Plain.deserialize('metric{}');
       const ed = new SlateEditor({ value });
       const valueWithSelection = ed.moveForward(7).value;
@@ -279,6 +281,7 @@ describe('Language completion provider', () => {
       } as any) as PrometheusDatasource;
       const instance = new LanguageProvider(datasource);
       instance.lookupsDisabled = false;
+      instance.labelValuesDisabled = false;
       const value = Plain.deserialize('{job1="foo",job2!="foo",job3=~"foo",__name__="metric",}');
       const ed = new SlateEditor({ value });
       const valueWithSelection = ed.moveForward(54).value;
@@ -300,6 +303,7 @@ describe('Language completion provider', () => {
         },
       } as any) as PrometheusDatasource);
       instance.lookupsDisabled = false;
+      instance.labelValuesDisabled = false;
       const value = Plain.deserialize('{job!=}');
       const ed = new SlateEditor({ value });
       const valueWithSelection = ed.moveForward(6).value;
@@ -322,6 +326,7 @@ describe('Language completion provider', () => {
     it('returns a refresher on label context and unavailable metric', async () => {
       const instance = new LanguageProvider(datasource);
       instance.lookupsDisabled = false;
+      instance.labelValuesDisabled = false;
       const value = Plain.deserialize('metric{}');
       const ed = new SlateEditor({ value });
       const valueWithSelection = ed.moveForward(7).value;
@@ -341,6 +346,7 @@ describe('Language completion provider', () => {
         metadataRequest: () => simpleMetricLabelsResponse,
       } as any) as PrometheusDatasource);
       instance.lookupsDisabled = false;
+      instance.labelValuesDisabled = false;
       const value = Plain.deserialize('metric{bar=ba}');
       const ed = new SlateEditor({ value });
       const valueWithSelection = ed.moveForward(13).value;
@@ -361,6 +367,7 @@ describe('Language completion provider', () => {
         metadataRequest: () => simpleMetricLabelsResponse,
       } as any) as PrometheusDatasource);
       instance.lookupsDisabled = false;
+      instance.labelValuesDisabled = false;
       const value = Plain.deserialize('sum(metric{foo="xx"}) by ()');
       const ed = new SlateEditor({ value });
       const valueWithSelection = ed.moveForward(26).value;
@@ -380,6 +387,7 @@ describe('Language completion provider', () => {
         metadataRequest: () => simpleMetricLabelsResponse,
       } as any) as PrometheusDatasource);
       instance.lookupsDisabled = false;
+      instance.labelValuesDisabled = false;
       const value = Plain.deserialize('sum(metric) by ()');
       const ed = new SlateEditor({ value });
       const valueWithSelection = ed.moveForward(16).value;
@@ -399,6 +407,7 @@ describe('Language completion provider', () => {
         metadataRequest: () => simpleMetricLabelsResponse,
       } as any) as PrometheusDatasource);
       instance.lookupsDisabled = false;
+      instance.labelValuesDisabled = false;
       const value = Plain.deserialize('sum(\nmetric\n)\nby ()');
       const aggregationTextBlock = value.document.getBlocks().get(3);
       const ed = new SlateEditor({ value });
@@ -425,6 +434,7 @@ describe('Language completion provider', () => {
         metadataRequest: () => simpleMetricLabelsResponse,
       } as any) as PrometheusDatasource);
       instance.lookupsDisabled = false;
+      instance.labelValuesDisabled = false;
       const value = Plain.deserialize('sum(rate(metric[1h])) by ()');
       const ed = new SlateEditor({ value });
       const valueWithSelection = ed.moveForward(26).value;
@@ -449,6 +459,7 @@ describe('Language completion provider', () => {
         metadataRequest: () => simpleMetricLabelsResponse,
       } as any) as PrometheusDatasource);
       instance.lookupsDisabled = false;
+      instance.labelValuesDisabled = false;
       const value = Plain.deserialize('sum(rate(metric{label1="value"}[1h])) by ()');
       const ed = new SlateEditor({ value });
       const valueWithSelection = ed.moveForward(42).value;
@@ -470,6 +481,7 @@ describe('Language completion provider', () => {
     it('returns no suggestions inside an unclear aggregation context using alternate syntax', async () => {
       const instance = new LanguageProvider(datasource);
       instance.lookupsDisabled = false;
+      instance.labelValuesDisabled = false;
       const value = Plain.deserialize('sum by ()');
       const ed = new SlateEditor({ value });
       const valueWithSelection = ed.moveForward(8).value;
@@ -489,6 +501,7 @@ describe('Language completion provider', () => {
         metadataRequest: () => simpleMetricLabelsResponse,
       } as any) as PrometheusDatasource);
       instance.lookupsDisabled = false;
+      instance.labelValuesDisabled = false;
       const value = Plain.deserialize('sum by () (metric)');
       const ed = new SlateEditor({ value });
       const valueWithSelection = ed.moveForward(8).value;
@@ -515,6 +528,7 @@ describe('Language completion provider', () => {
 
       const instance = new LanguageProvider(datasource);
       instance.lookupsDisabled = false;
+      instance.labelValuesDisabled = false;
       const value = Plain.deserialize('{}');
       const ed = new SlateEditor({ value });
       const valueWithSelection = ed.moveForward(1).value;
