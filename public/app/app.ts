@@ -4,6 +4,7 @@ import 'regenerator-runtime/runtime';
 
 import 'whatwg-fetch'; // fetch polyfill needed for PhantomJs rendering
 import 'abortcontroller-polyfill/dist/polyfill-patch-fetch'; // fetch polyfill needed for PhantomJs rendering
+import './polyfills/old-mediaquerylist'; // Safari < 14 does not have mql.addEventListener()
 import 'file-saver';
 import 'jquery';
 
@@ -74,7 +75,7 @@ export class GrafanaApp {
     setLocale(config.bootData.user.locale);
     setPanelRenderer(PanelRenderer);
     setTimeZoneResolver(() => config.bootData.user.timezone);
-    // Important that extensions are initialized before store
+    // Important that extensions are initialized before store.
     initExtensions();
     configureStore();
 

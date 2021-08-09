@@ -6,9 +6,13 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"net/url"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
+
+	"github.com/gobwas/glob"
 
 	"github.com/grafana/grafana/pkg/api/dtos"
 	"github.com/grafana/grafana/pkg/api/response"
@@ -230,15 +234,26 @@ func (g *GrafanaLive) Init() error {
 		return err
 	}
 
+	appURL, err := url.Parse(g.Cfg.AppURL)
+	if err != nil {
+		return fmt.Errorf("error parsing AppURL %s: %w", g.Cfg.AppURL, err)
+	}
+
+	originPatterns := g.Cfg.LiveAllowedOrigins
+	originGlobs, _ := setting.GetAllowedOriginGlobs(originPatterns) // error already checked on config load.
+	checkOrigin := getCheckOriginFunc(appURL, originPatterns, originGlobs)
+
 	// Use a pure websocket transport.
 	wsHandler := centrifuge.NewWebsocketHandler(node, centrifuge.WebsocketConfig{
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024,
+		CheckOrigin:     checkOrigin,
 	})
 
 	pushWSHandler := pushws.NewHandler(g.ManagedStreamRunner, pushws.Config{
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024,
+		CheckOrigin:     checkOrigin,
 	})
 
 	g.websocketHandler = func(ctx *models.ReqContext) {
@@ -275,6 +290,46 @@ func (g *GrafanaLive) Init() error {
 	}, middleware.ReqOrgAdmin)
 
 	return nil
+}
+
+func getCheckOriginFunc(appURL *url.URL, originPatterns []string, originGlobs []glob.Glob) func(r *http.Request) bool {
+	return func(r *http.Request) bool {
+		origin := r.Header.Get("Origin")
+		if origin == "" {
+			return true
+		}
+		if len(originPatterns) == 1 && originPatterns[0] == "*" {
+			// fast path for *.
+			return true
+		}
+		ok, err := checkAllowedOrigin(strings.ToLower(origin), appURL, originGlobs)
+		if err != nil {
+			logger.Warn("Error parsing request origin", "error", err, "origin", origin)
+			return false
+		}
+		if !ok {
+			logger.Warn("Request Origin is not authorized", "origin", origin, "appUrl", appURL.String(), "allowedOrigins", strings.Join(originPatterns, ","))
+			return false
+		}
+		return true
+	}
+}
+
+func checkAllowedOrigin(origin string, appURL *url.URL, originGlobs []glob.Glob) (bool, error) {
+	originURL, err := url.Parse(origin)
+	if err != nil {
+		logger.Warn("Failed to parse request origin", "error", err, "origin", origin)
+		return false, err
+	}
+	if strings.EqualFold(originURL.Scheme, appURL.Scheme) && strings.EqualFold(originURL.Host, appURL.Host) {
+		return true, nil
+	}
+	for _, pattern := range originGlobs {
+		if pattern.Match(origin) {
+			return true, nil
+		}
+	}
+	return false, nil
 }
 
 func runConcurrentlyIfNeeded(ctx context.Context, semaphore chan struct{}, fn func()) error {
