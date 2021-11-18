@@ -164,7 +164,7 @@ func setup(goos string) {
 		args = append(args, "-buildmode=exe")
 	}
 	args = append(args, "./pkg/cmd/grafana-server")
-	runPrint("go", args...)
+	runPrint("go1.17.3", args...)
 }
 
 func doBuild(binaryName, pkg string, opts BuildOpts) error {
@@ -211,7 +211,7 @@ func doBuild(binaryName, pkg string, opts BuildOpts) error {
 	args = append(args, "-o", binary)
 	args = append(args, pkg)
 
-	runPrint("go", args...)
+	runPrint("go1.17.3", args...)
 
 	if opts.isDev {
 		return nil
@@ -220,7 +220,7 @@ func doBuild(binaryName, pkg string, opts BuildOpts) error {
 	if err := setBuildEnv(opts); err != nil {
 		return err
 	}
-	runPrint("go", "version")
+	runPrint("go1.17.3", "version")
 	libcPart = ""
 	if opts.libc != "" {
 		libcPart = fmt.Sprintf("/%s", opts.libc)
