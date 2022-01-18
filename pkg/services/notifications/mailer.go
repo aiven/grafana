@@ -160,6 +160,7 @@ func (ns *NotificationService) createDialer() (*gomail.Dialer, error) {
 	} else {
 		d.LocalName = setting.InstanceName
 	}
+	d.Timeout = ns.Cfg.Smtp.Timeout
 	return d, nil
 }
 
