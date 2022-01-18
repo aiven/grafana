@@ -131,6 +131,7 @@ func (sc *SmtpClient) createDialer() (*gomail.Dialer, error) {
 	} else {
 		d.LocalName = setting.InstanceName
 	}
+	d.Timeout = sc.cfg.Timeout
 	return d, nil
 }
 
