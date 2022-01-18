@@ -1,6 +1,9 @@
 package setting
 
-import "github.com/grafana/grafana/pkg/util"
+import (
+	"github.com/grafana/grafana/pkg/util"
+	"time"
+)
 
 type SmtpSettings struct {
 	Enabled        bool
@@ -14,6 +17,7 @@ type SmtpSettings struct {
 	EhloIdentity   string
 	StartTLSPolicy string
 	SkipVerify     bool
+	Timeout        time.Duration
 
 	SendWelcomeEmailOnSignUp bool
 	TemplatesPatterns        []string
@@ -33,6 +37,7 @@ func (cfg *Cfg) readSmtpSettings() {
 	cfg.Smtp.EhloIdentity = sec.Key("ehlo_identity").String()
 	cfg.Smtp.StartTLSPolicy = sec.Key("startTLS_policy").String()
 	cfg.Smtp.SkipVerify = sec.Key("skip_verify").MustBool(false)
+	cfg.Smtp.Timeout = time.Duration(sec.Key("timeout").MustInt(20)) * time.Second
 
 	emails := cfg.Raw.Section("emails")
 	cfg.Smtp.SendWelcomeEmailOnSignUp = emails.Key("welcome_email_on_sign_up").MustBool(false)
