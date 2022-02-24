@@ -101,7 +101,7 @@ build-cli: ## Build Grafana CLI application.
 
 build-js: ## Build frontend assets.
 	@echo "build frontend"
-	yarn run build
+	NODE_OPTIONS='--max_old_space_size=8192' yarn run build
 	yarn run plugins:build-bundled
 
 build: build-go build-js ## Build backend and frontend.
