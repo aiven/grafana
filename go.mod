@@ -21,7 +21,7 @@ require (
 	github.com/BurntSushi/toml v0.3.1
 	github.com/Masterminds/semver v1.5.0
 	github.com/VividCortex/mysqlerr v0.0.0-20170204212430-6c6b55f8796f
-	github.com/aws/aws-sdk-go v1.43.31
+	github.com/aws/aws-sdk-go v1.44.9
 	github.com/beevik/etree v1.1.0
 	github.com/benbjohnson/clock v1.1.0
 	github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b
@@ -141,7 +141,6 @@ require (
 	github.com/apache/arrow/go/arrow v0.0.0-20211112161151-bc219186db40 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
-	github.com/buger/jsonparser v1.1.1 // indirect
 	github.com/c2h5oh/datasize v0.0.0-20200112174442-28bbd4740fee // indirect
 	github.com/cenkalti/backoff/v4 v4.1.2 // indirect
 	github.com/centrifugal/protocol v0.7.6 // indirect
@@ -153,7 +152,6 @@ require (
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/dlclark/regexp2 v1.4.1-0.20201116162257-a2a8dda75c91 // indirect
 	github.com/docker/go-units v0.4.0 // indirect
-	github.com/dustin/go-humanize v1.0.0 // indirect
 	github.com/edsrzf/mmap-go v1.0.0 // indirect
 	github.com/emicklei/proto v1.6.15 // indirect
 	github.com/felixge/httpsnoop v1.0.2 // indirect
