@@ -21,7 +21,7 @@ require (
 	github.com/BurntSushi/toml v1.1.0
 	github.com/Masterminds/semver v1.5.0
 	github.com/VividCortex/mysqlerr v0.0.0-20170204212430-6c6b55f8796f
-	github.com/aws/aws-sdk-go v1.44.9
+	github.com/aws/aws-sdk-go v1.44.42
 	github.com/beevik/etree v1.1.0
 	github.com/benbjohnson/clock v1.1.0
 	github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b
@@ -34,7 +34,7 @@ require (
 	github.com/fatih/color v1.13.0
 	github.com/gchaincl/sqlhooks v1.3.0
 	github.com/getsentry/sentry-go v0.13.0
-	github.com/go-kit/kit v0.11.0 // indirect
+	github.com/go-kit/kit v0.11.0
 	github.com/go-openapi/strfmt v0.20.2
 	github.com/go-redis/redis/v8 v8.11.4
 	github.com/go-sourcemap/sourcemap v2.1.3+incompatible
