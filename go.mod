@@ -117,7 +117,7 @@ require (
 	gopkg.in/square/go-jose.v2 v2.5.1
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
-	xorm.io/builder v0.3.6
+	xorm.io/builder v0.3.11
 	xorm.io/core v0.7.3
 	xorm.io/xorm v0.8.2
 )
@@ -241,7 +241,6 @@ require (
 	github.com/Azure/go-autorest/autorest/adal v0.9.17
 	github.com/armon/go-radix v1.0.0
 	github.com/blugelabs/bluge v0.2.1
-	github.com/blugelabs/bluge_segment_api v0.2.0
 	github.com/getkin/kin-openapi v0.94.0
 	github.com/golang-migrate/migrate/v4 v4.7.0
 	github.com/grafana/dskit v0.0.0-20211011144203-3a88ec0b675f
@@ -256,6 +255,7 @@ require (
 require (
 	cloud.google.com/go v0.100.2 // indirect
 	github.com/armon/go-metrics v0.3.10 // indirect
+	github.com/blugelabs/bluge_segment_api v0.2.0 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
 	github.com/google/gofuzz v1.2.0 // indirect
 	github.com/gosimple/unidecode v1.0.1 // indirect
