@@ -116,7 +116,7 @@ require (
 	go.opentelemetry.io/otel/trace v1.11.2
 	golang.org/x/crypto v0.4.0
 	golang.org/x/exp v0.0.0-20221211140036-ad323defaf05
-	golang.org/x/net v0.5.0
+	golang.org/x/net v0.7.0
 	golang.org/x/oauth2 v0.3.0
 	golang.org/x/sync v0.1.0
 	golang.org/x/time v0.2.0
@@ -131,7 +131,7 @@ require (
 	gopkg.in/square/go-jose.v2 v2.5.1
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1
-	xorm.io/builder v0.3.6
+	xorm.io/builder v0.3.6 // indirect
 	xorm.io/core v0.7.3
 	xorm.io/xorm v0.8.2
 )
@@ -229,8 +229,8 @@ require (
 	go.opencensus.io v0.24.0 // indirect
 	go.uber.org/atomic v1.10.0
 	go.uber.org/goleak v1.2.0 // indirect
-	golang.org/x/sys v0.4.0 // indirect
-	golang.org/x/text v0.6.0
+	golang.org/x/sys v0.5.0 // indirect
+	golang.org/x/text v0.7.0
 	golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20221227171554-f9683d7f8bef
