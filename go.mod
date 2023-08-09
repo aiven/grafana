@@ -81,7 +81,7 @@ require (
 	github.com/lib/pq v1.10.7
 	github.com/linkedin/goavro/v2 v2.10.0
 	github.com/m3db/prometheus_remote_client_golang v0.4.4
-	github.com/magefile/mage v1.14.0
+	github.com/magefile/mage v1.15.0
 	github.com/mattn/go-isatty v0.0.16
 	github.com/mattn/go-sqlite3 v1.14.16
 	github.com/matttproud/golang_protobuf_extensions v1.0.4
