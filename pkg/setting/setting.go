@@ -180,6 +180,8 @@ type Cfg struct {
 	DisableGravatar                  bool
 	DataProxyWhiteList               map[string]bool
 	ActionsAllowPostURL              string
+	DisableEnvVariableExpansion     bool
+	DisableFileVariableExpansion    bool
 
 	TempDataLifetime time.Duration
 

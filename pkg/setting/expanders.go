@@ -49,12 +49,47 @@ func GetExpanderRegex() *regexp.Regexp {
 	return regex
 }
 
+func removeExpander(name string, allExpanders []registeredExpander) []registeredExpander {
+	fmt.Printf("removing expander: %s\n", name)
+	removedExpanders := []registeredExpander{}
+	for _, x := range allExpanders {
+		if x.name != name{
+			removedExpanders = append(removedExpanders, x)
+			fmt.Printf("adding expander: %s\n", x.name)
+		}
+	}
+	return removedExpanders
+}
+
+func disableConfigExpanders(file *ini.File) []registeredExpander {
+	configExpanders := expanders
+	disableEnvVariableExpansion := false
+	disableFileVariableExpansion := false
+
+	if security := file.Section("security"); security != nil {
+		disableEnvVariableExpansion = security.Key("disable_env_variable_expansion").MustBool()
+		fmt.Printf("disableEnvExpansion: %t \n", disableEnvVariableExpansion)
+		disableFileVariableExpansion = security.Key("disable_file_variable_expansion").MustBool()
+		fmt.Printf("disableFileVariableExpansion: %t \n", disableFileVariableExpansion)
+	}
+	if disableEnvVariableExpansion == true {
+		configExpanders = removeExpander("env", configExpanders)
+	}
+	if disableFileVariableExpansion == true {
+		configExpanders = removeExpander("file", configExpanders)
+	}
+	return configExpanders
+}
+
 func expandConfig(file *ini.File) error {
-	sort.Slice(expanders, func(i, j int) bool {
-		return expanders[i].priority < expanders[j].priority
+
+	configExpanders := disableConfigExpanders(file)
+
+	sort.Slice(configExpanders, func(i, j int) bool {
+		return configExpanders[i].priority < configExpanders[j].priority
 	})
 
-	for _, expander := range expanders {
+	for _, expander := range configExpanders {
 		err := expander.expander.SetupExpander(file)
 		if err != nil {
 			return fmt.Errorf("got error during initialization of expander '%s': %w", expander.name, err)
