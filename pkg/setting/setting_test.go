@@ -317,6 +317,18 @@ func TestLoadingSettings(t *testing.T) {
 		require.Equal(t, "https://grafana.com", cfg.GrafanaComURL)
 		require.Equal(t, "https://grafana.com/api", cfg.GrafanaComAPIURL)
 	})
+
+	t.Run("Test disabling variable expansion from env and file", func(t *testing.T){
+		cfg := NewCfg()
+		os.Setenv("APP_MODE", "production")
+		err := cfg.Load(CommandLineArgs{
+			HomePath: "../../",
+			Config:   "../../pkg/setting/testdata/expansion.ini",
+		})
+		require.Nil(t, err)
+		require.Equal(t, "$__env{APP_MODE}", cfg.Env)
+		require.Equal(t, "$__file{/etc/secrets/metrics_password}", cfg.MetricsEndpointBasicAuthPassword)
+	})
 }
 
 func TestParseAppURLAndSubURL(t *testing.T) {
