@@ -236,6 +236,8 @@ type Cfg struct {
 	GravatarURL                     string
 	DataProxyWhiteList              map[string]bool
 	ActionsAllowPostURL             string
+	DisableEnvVariableExpansion     bool
+	DisableFileVariableExpansion    bool
 
 	// K8s Dashboard Cleanup
 	K8sDashboardCleanup K8sDashboardCleanupSettings
