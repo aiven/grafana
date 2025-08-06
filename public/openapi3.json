@@ -1207,16 +1207,6 @@
         },
         "description": "(empty)"
       },
-      "goneError": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/ErrorResponseBody"
-            }
-          }
-        },
-        "description": "GoneError is returned when the requested endpoint was removed."
-      },
       "helpFlagResponse": {
         "content": {
           "application/json": {
@@ -1398,6 +1388,16 @@
           }
         },
         "description": "An OKResponse is returned if the request was successful."
+      },
+      "postAPIkeyResponse": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/NewApiKeyResult"
+            }
+          }
+        },
+        "description": "(empty)"
       },
       "postAnnotationResponse": {
         "content": {
@@ -1662,16 +1662,6 @@
           }
         },
         "description": "(empty)"
-      },
-      "statusMovedPermanently": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/ErrorResponseBody"
-            }
-          }
-        },
-        "description": "StatusMovedPermanently"
       },
       "unauthorisedError": {
         "content": {
@@ -13643,9 +13633,35 @@
         "deprecated": true,
         "description": "Will return details of the created API key.",
         "operationId": "addAPIkey",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddAPIKeyCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-originalParamName": "Body"
+        },
         "responses": {
-          "410": {
-            "$ref": "#/components/responses/goneError"
+          "200": {
+            "$ref": "#/components/responses/postAPIkeyResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/badRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthorisedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/forbiddenError"
+          },
+          "409": {
+            "$ref": "#/components/responses/conflictError"
+          },
+          "500": {
+            "$ref": "#/components/responses/internalServerError"
           }
         },
         "summary": "Creates an API key.",
