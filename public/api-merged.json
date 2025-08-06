@@ -2231,9 +2231,34 @@
         "summary": "Creates an API key.",
         "operationId": "addAPIkey",
         "deprecated": true,
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AddAPIKeyCommand"
+            }
+          }
+        ],
         "responses": {
-          "410": {
-            "$ref": "#/responses/goneError"
+          "200": {
+            "$ref": "#/responses/postAPIkeyResponse"
+          },
+          "400": {
+            "$ref": "#/responses/badRequestError"
+          },
+          "401": {
+            "$ref": "#/responses/unauthorisedError"
+          },
+          "403": {
+            "$ref": "#/responses/forbiddenError"
+          },
+          "409": {
+            "$ref": "#/responses/conflictError"
+          },
+          "500": {
+            "$ref": "#/responses/internalServerError"
           }
         }
       }
@@ -24319,12 +24344,6 @@
         }
       }
     },
-    "goneError": {
-      "description": "GoneError is returned when the requested endpoint was removed.",
-      "schema": {
-        "$ref": "#/definitions/ErrorResponseBody"
-      }
-    },
     "helpFlagResponse": {
       "description": "(empty)",
       "schema": {
@@ -24513,6 +24532,12 @@
       "description": "An OKResponse is returned if the request was successful.",
       "schema": {
         "$ref": "#/definitions/SuccessResponseBody"
+      }
+    },
+    "postAPIkeyResponse": {
+      "description": "(empty)",
+      "schema": {
+        "$ref": "#/definitions/NewApiKeyResult"
       }
     },
     "postAnnotationResponse": {
@@ -24734,12 +24759,6 @@
       "description": "(empty)",
       "schema": {
         "$ref": "#/definitions/SnapshotListResponseDTO"
-      }
-    },
-    "statusMovedPermanently": {
-      "description": "StatusMovedPermanently",
-      "schema": {
-        "$ref": "#/definitions/ErrorResponseBody"
       }
     },
     "unauthorisedError": {
