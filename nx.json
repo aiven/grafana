@@ -12,5 +12,6 @@
     "autoExit": true,
     "enabled": false
   },
+  "analytics": false,
   "defaultBase": "main"
 }
